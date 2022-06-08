@@ -55,7 +55,8 @@ contract Airdrop  {
         uint256 amountToTransfer = balance / subscribers.length;
         for (uint i = 0; i < subscribers.length; i++) {
             require(subscribers[i] != address(0));
-            require(CryptoToken(tokenAddress).transfer(subscribers[i], amountToTransfer) emit NewSubscriber(subscribers[i], amountToTransfer));
+            require(CryptoToken(tokenAddress).transfer(subscribers[i], amountToTransfer));
+            emit NewSubscriber(subscribers[i], amountToTransfer);
         }
         return true;
     }
