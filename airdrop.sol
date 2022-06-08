@@ -51,7 +51,6 @@ contract Airdrop  {
     }
 
     function execute() public isOwner returns(bool) {
-        contractState = Status.ACTIVE;
         uint256 balance = CryptoToken(tokenAddress).balanceOf(address(this));
         uint256 amountToTransfer = balance / subscribers.length;
         for (uint i = 0; i < subscribers.length; i++) {
