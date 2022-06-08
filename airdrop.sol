@@ -43,6 +43,7 @@ contract Airdrop  {
     // Public Functions
 
     function subscribe() public returns(bool) {
+        require(contractState == Status.ACTIVE,"The Airdrop is not available now :(");
         require(hasSubscribed(msg.sender) == true);
         subscribers.push(address(msg.sender));
         return true;
@@ -51,6 +52,7 @@ contract Airdrop  {
     }
 
     function execute() public isOwner returns(bool) {
+        require(contractState == Status.ACTIVE,"The Airdrop is not available now :(");
         uint256 balance = CryptoToken(tokenAddress).balanceOf(address(this));
         uint256 amountToTransfer = balance / subscribers.length;
         for (uint i = 0; i < subscribers.length; i++) {
