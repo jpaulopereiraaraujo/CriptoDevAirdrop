@@ -77,10 +77,22 @@ contract Airdrop  {
         
     }
 
+    function setStatus(uint256 num) public isOwner{
+        if(num == 1){
+             contractState = Status.PAUSED;
+        }
+        if (num == 0) {
+             contractState = Status.ACTIVE;
+        }
+        if(num==2){
+             contractState = Status.CANCELLED;
+        }
+    }
+
     // Kill
     function kill() public isOwner {
-        contractState = Status.CANCELLED;
-        //TODO: Need Implementation
+        require(contractState == Status.CANCELLED,"O contrato esta ativo");
+        selfdestruct(payable(owner));
     }
     
     
