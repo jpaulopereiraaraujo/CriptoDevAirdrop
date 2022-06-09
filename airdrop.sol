@@ -21,7 +21,9 @@ contract Airdrop  {
     address private owner;
     address public tokenAddress;
     address[] private subscribers;
-    Status contractState; 
+    Status contractState;
+
+    mapping(address => bool) public isSubscribers; 
 
     // Modifiers
     modifier isOwner() {
@@ -44,7 +46,9 @@ contract Airdrop  {
 
     function subscribe() public returns(bool) {
         require(contractState == Status.ACTIVE,"The Airdrop is not available now :(");
-        require(hasSubscribed(msg.sender) == true);
+        
+        require(hasSubscribed() == true);
+        isSubscribers[msg.sender] = true;
         subscribers.push(address(msg.sender));
         return true;
         //TODO: Need Implementation
@@ -71,10 +75,11 @@ contract Airdrop  {
 
 
     // Private Functions
-    function hasSubscribed(address subscriber) private view returns(bool) {
-        for (uint256 i = 0; i < subscribers.length; i++){
+    function hasSubscribed() private view returns(bool) { 
+        require(isSubscribers[msg.sender] == false, "Vaza!!!"); 
+        /* for (uint256 i = 0; i < subscribers.length; i++){
             require(subscribers[i] != subscriber, "You are already subscribed!!!");
-        }
+        } */
         return true;
         
     }
